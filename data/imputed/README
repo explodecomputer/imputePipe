@@ -1,0 +1,5 @@
+This folder will store the imputation output, including
+- 5Mb chromosome chunks from impute2 output
+- final chromosome outputs
+- binary plink versions
+- filtered versions

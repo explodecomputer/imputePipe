@@ -1,0 +1,9 @@
+Store the reference data here. Download it from:
+http://mathgen.stats.ox.ac.uk/impute/data_download_1000G_phase1_integrated.html
+
+It is recommended that the entire dataset be downloaded, including all populations and variants. 
+
+Once downloaded, make sure to unpack using
+
+tar xzvf <ref.data.name>
+

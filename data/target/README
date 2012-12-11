@@ -1,0 +1,6 @@
+In this folder, deposit:
+- The raw genotype file (after standard QC)
+- The strand alignment file, download for the correct chip at:
+http://www.well.ox.ac.uk/~wrayner/strand/
+
+The reference aligned data will then be outputed into separate chromosomes here
