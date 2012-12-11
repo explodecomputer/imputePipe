@@ -1,7 +1,17 @@
 imputePipe
 ==========
 
-A pipeline to impute to [1000 genomes][0] efficiently by distributing to a compute cluster running `SGE`. It performs the following processes: 
+A pipeline to impute human SNP data to [1000 genomes][0] efficiently by parallelising across a compute cluster.
+
+#### Summary
+
+Provided here is simply a collection of scripts in `bash` and `R` that knit together a two stage imputation process:
+ - Stage one uses [`hapi-ur`][1] to haplotype the **target** data
+     - Williams AL, Patterson N, Glessner J, Hakonarson H, and Reich D. [Phasing of Many Thousands of Genotyped Samples][14]. American Journal of Human Genetics 2012 91(2) 238-251.
+ - Stage two uses [`impute2`][2] to impute to the 1000 genomes **reference**
+     - Howie BN, Donnelly P, and Marchini, J. [A Flexible and Accurate Genotype Imputation Method for the Next Generation of Genome-Wide Association Studies][15]. PLoS Genetics 2009 5(6):e1000529
+
+It performs the following processes: 
  - Alignment of **target** data to **reference** data
  - Haplotyping
  - Imputing
@@ -9,10 +19,6 @@ A pipeline to impute to [1000 genomes][0] efficiently by distributing to a compu
  - Filtering steps
 
 Runtime is fast thanks to some great software that is freely available (see below). I typically have 400 or so cores available and for *e.g.* 1000 individuals this will complete in a few hours. Time complexity scales linearly.
-
-This is simply a collection of scripts in `bash` and `R` that knit together a two stage imputation process:
- - Stage one uses [`hapi-ur`][1] to haplotype the **target** data
- - Stage two uses [`impute2`][2] to impute to the 1000 genomes **reference**
 
 #### Requirements
 
@@ -49,6 +55,7 @@ Here is a list of resources that I have used:
  - The `plyr` library in `R`, written by [Hadley Wickham][10]
  - Help and guidelines from the `MaCH` and `minimac` [Imputation Cookbook][11], developed by [Goncalo Abecasis][12]
 
+The pipeline was developed by Gibran Hemani under the [Complex Trait Genomics Group][16] at the University of Queensland (Diamantina Institute and Queensland Brain Institute). Valuable help was provided by members of Peter Visscher's and Naomi Wray's group, and Paul Leo from Matt Brown's lab.
 
 ## Instructions
 
@@ -60,7 +67,7 @@ Here is a list of resources that I have used:
 
 
  2. Then `cp` your raw data in binary plink format to `data/target`
- 3. Download the strand alignment files for your data's chip from Will Rayner's [page][3]
+ 3. Download the strand alignment files for your data's chip from Will Rayner's [page][3] and unzip.
  4. Download the chain file for the SNP chip's build from [UCSC][4] (most likely you will need HG18 to HG19 which is included in this repo)
  5. Download and unarchive the [reference data][5] from the [impute2][1] website, *e.g.*
 
@@ -208,7 +215,6 @@ I have never tried it on another cluster, and I imagine that some of the paramet
 It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-
 [0]: http://1000genomes.org/
 [1]: http://code.google.com/p/hapi-ur/
 [2]: http://mathgen.stats.ox.ac.uk/impute/impute_v2.html
@@ -223,3 +229,6 @@ It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
 [11]: http://genome.sph.umich.edu/wiki/Minimac:_1000_Genomes_Imputation_Cookbook
 [12]: http://genome.sph.umich.edu/wiki/Abecasis_Lab
 [13]: http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml#bed
+[14]: http://www.cell.com/AJHG/abstract/S0002-9297%2812%2900322-9
+[15]: http://www.plosgenetics.org/article/info%3Adoi%2F10.1371%2Fjournal.pgen.1000529
+[16]: http://www.complextraitgenomics.com
