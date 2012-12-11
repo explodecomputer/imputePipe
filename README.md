@@ -39,7 +39,7 @@ Runtime is fast thanks to some great software that is freely available (see belo
 
 ## Credits
 
-Imputation is a big, slow, ugly, long-winded, hand-wavey, unpleasant process. I have used a lot of data, scripts, and programmes that I came across on the internet, that have made all of this much, much easier. Most of this has been used without permission from the original authors. If any of the authors are angry about this then let me know and I will take it down!
+Imputation is a big, slow, ugly, long-winded, hand-wavey, unpleasant process. In setting up this pipeline I have used plenty of scripts, programmes, and data found in various corners of the internet, and these have made the whole task much, much easier. Most of these resources have been used without permission from the original authors. If any of the authors are angry about this then let me know and I will take it down!
 
 Here is a list of resources that I have used:
 
