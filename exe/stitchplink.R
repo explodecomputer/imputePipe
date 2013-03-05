@@ -47,8 +47,7 @@ for(i in 2:length(stitch)) {
 	print(cmd <- paste("sed 1d ", inputstem, "_", stitch[i], "_info >> ", outputstem, "_info.txt", sep=""))
 	system(cmd)
 }
-# gzip info file
-system(paste("gzip ", outputstem, "_info.txt", sep=""))
+
 
 # create list of files to be merged by plink
 filelist <- data.frame(paste(inputstem, "_", stitch, ".bed ", inputstem, "_", stitch, ".bim ", inputstem, "_", stitch, ".fam", sep=""))

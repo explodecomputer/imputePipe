@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #$ -N hap
-#$ -t 1-66
+#$ -t 1
 #$ -S /bin/bash
 #$ -cwd
 #$ -o job_reports/

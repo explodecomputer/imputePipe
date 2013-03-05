@@ -11,8 +11,10 @@
 #3. The new stem for output
 #Result: A new bed file (etc) using the new stem
 
+set -e
+
 wd=`pwd`"/"
-source parameters.sh
+source ${wd}parameters.sh
 
 stem=${rawdata}
 outstem=${originaldata}

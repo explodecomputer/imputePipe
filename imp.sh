@@ -67,7 +67,7 @@ echo "#$ -o ${impdatadir}job_reports/"      >> ${sub_imp}
 echo "#$ -e ${impdatadir}job_reports/"      >> ${sub_imp}
 echo "#$ -t 1-${nsplit}"                    >> ${sub_imp}
 echo "#$ -S /bin/bash"                      >> ${sub_imp}
-echo "#$ -l mem_free=8G"                    >> ${sub_imp}
+echo "#$ -l vf=10G"                    >> ${sub_imp}
 
 echo ""                                     >> ${sub_imp}
 

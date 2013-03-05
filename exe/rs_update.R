@@ -24,6 +24,9 @@ dim(ref)
 dim(bim)
 
 ref <- subset(ref, !duplicated(pd))
+dim(ref)
+ref <- subset(ref, !duplicated(SNP))
+dim(ref)
 
 table(bim$SNP %in% ref$SNP)
 table(ref$SNP %in% bim$SNP)
