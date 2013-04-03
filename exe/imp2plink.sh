@@ -61,6 +61,6 @@ sed 1d ${beagleout} | cut -d " " -f 3- > ${gprobs}.temp.tped
 paste -d " " ${plinkfile}.map ${gprobs}.temp.tped > ${plinkfile}.tped
 
 
-${plink} --tfile ${plinkfile} --make-bed --out ${plinkfile}
+${plink} --noweb --tfile ${plinkfile} --make-bed --out ${plinkfile}
 
 rm ${beagleout} ${gprobs}.temp.tped ${plinkfile}.tped ${plinkfile}.map ${plinkfile}.tfam ${gprobs}2

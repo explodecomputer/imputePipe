@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #$ -N stitch
-#$ -t 1-22
+#$ -t 16
 #$ -cwd
 #$ -S /bin/bash
 #$ -o job_reports/

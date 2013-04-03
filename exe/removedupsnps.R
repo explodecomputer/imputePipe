@@ -43,7 +43,7 @@ remove <- bim$snp[grep("DUPLICATED", bim$snp)]
 
 write.table(remove, file=paste(rootname, ".duplicatesnps", sep=""), row=F, col=F, qu=F)
 
-(cmd <- paste(plink, " --bfile ", rootname, " --exclude ", paste(rootname, ".duplicatesnps", sep=""), " --make-bed --out ", rootname, sep=""))
+(cmd <- paste(plink, " --noweb --bfile ", rootname, " --exclude ", paste(rootname, ".duplicatesnps", sep=""), " --make-bed --out ", rootname, sep=""))
 
 system(cmd)
 

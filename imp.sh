@@ -6,7 +6,7 @@
 #$ -cwd
 #$ -o job_reports/
 #$ -e job_reports/
-#$ -l vf=8G
+#$ -l vf=20G
 
 # 1. vote on haplotypes
 # 2. spawn imputation script

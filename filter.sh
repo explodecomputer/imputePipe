@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #$ -N filter
-#$ -t 1-22
+#$ -t 1,5
 #$ -S /bin/bash
 #$ -cwd
 #$ -o job_reports/
@@ -27,10 +27,17 @@ source parameters.sh
 
 # Filter based on maf and info thresholds
 
-# gzip ${impdatadir}${plink1kg}_info.txt
-zcat ${impdatadir}${plink1kg}_info.txt.gz | awk -v minmaf=${filterMAF} -v mininfo=${filterInfo} '{ if(NR == 1 || ($4 >= minmaf && $4 <= (1-minmaf) && $5 >= mininfo)) {print $0}}' | gzip > ${impdatadir}${filtername}_info.txt.gz
+if [ -f ${impdatadir}${plink1kg}_info.txt ];
+then
+  gzip -f ${impdatadir}${plink1kg}_info.txt
+fi
 
-# Extract SNPs for plink to use
-zcat ${impdatadir}${filtername}_info.txt.gz | tail -n +2 | cut -d " " -f 2 | uniq > ${impdatadir}${filtername}.keepsnps
+# Filter out the info file
+R --no-save --args ${impdatadir}${plink1kg}_info.txt.gz ${impdatadir}${plink1kg}.bim ${impdatadir}${filtername}_info.txt < ${filterinfoR}
 
-${plink} --bfile ${impdatadir}${plink1kg} --extract ${impdatadir}${filtername}.keepsnps --make-bed --out ${impdatadir}${filtername}
+gzip -f ${impdatadir}${filtername}_info.txt
+
+${plink} --noweb --bfile ${impdatadir}${plink1kg} --exclude ${impdatadir}${plink1kg}.bim.removesnps --make-bed --out ${impdatadir}${filtername}
+
+
+
