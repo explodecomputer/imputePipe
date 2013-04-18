@@ -27,5 +27,5 @@ outname="1kg_eur_maf0.05_${chr}"
 zcat ${vcf} | tail -n +29 | cut -f 1-5 > codes_${chr}
 R --no-save --args codes_${chr} < keepsnps.R
 
-${vcftools} --gzvcf ${vcf} --plink --maf ${maf} --out ${outname}
+${vcftools} --gzvcf ${vcf} --plink --maf ${maf} --out ${outname} --positions codes_${chr}_keep
 ${plink} --noweb --file ${outname} --make-bed --out ${outname}
