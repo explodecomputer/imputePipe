@@ -1,11 +1,12 @@
 #!/bin/bash
 
 #$ -N stitch
-#$ -t 16
+#$ -t 1-22
 #$ -cwd
 #$ -S /bin/bash
 #$ -o job_reports/
 #$ -e job_reports/
+#$ -l h_vmem=50G
 
 set -e
 

@@ -6,7 +6,7 @@
 #$ -cwd
 #$ -o job_reports/
 #$ -e job_reports/
-#$ -l vf=20G
+#$ -l h_vmem=10G
 
 # 1. vote on haplotypes
 # 2. spawn imputation script
@@ -67,7 +67,7 @@ echo "#$ -o ${impdatadir}job_reports/"      >> ${sub_imp}
 echo "#$ -e ${impdatadir}job_reports/"      >> ${sub_imp}
 echo "#$ -t 1-${nsplit}"                    >> ${sub_imp}
 echo "#$ -S /bin/bash"                      >> ${sub_imp}
-echo "#$ -l vf=10G"                    >> ${sub_imp}
+echo "#$ -l h_vmem=40G"                    >> ${sub_imp}
 
 echo ""                                     >> ${sub_imp}
 

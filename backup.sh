@@ -56,4 +56,13 @@ check_cp ${imp}.gz ${destdir}/chr${i}/${impname}_${i}.gz
 check_cp ${imp}_haps.gz ${destdir}/chr${i}/${impname}_${i}_haps.gz
 check_cp ${imp}_info.txt.gz ${destdir}/chr${i}/${impname}_${i}_info.txt.gz
 
+# Now copy the filtered data
+fil=${hostdir}/data/imputed/chr${i}/${filtername1}${i}${filtername2}
+
+echo "Copying ${fil}"
+check_cp ${fil}.bed ${destdir}/chr${i}/${filtername1}${i}${filtername2}.bed
+check_cp ${fil}.bim ${destdir}/chr${i}/${filtername1}${i}${filtername2}.bim
+check_cp ${fil}.fam ${destdir}/chr${i}/${filtername1}${i}${filtername2}.fam
+check_cp ${fil}_info.txt.gz ${destdir}/chr${i}/${filtername1}${i}${filtername2}_info.txt.gz
+
 # ./backup.sh ~/ibimp/twge /fileserver/group/wrayvisscher/gib/imputed/twge twge_1kg_p1v3 twge_1kg_p1v3_ _polygenic TWGE 22

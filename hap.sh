@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #$ -N hap
-#$ -t 36
+#$ -t 1-66
 #$ -S /bin/bash
 #$ -cwd
 #$ -o job_reports/
 #$ -e job_reports/
-#$ -l vf=60G
+#$ -l h_vmem=10G
 
 # This script will take a reference-aligned binary plink file and:
 # 1. For each chromosome perform hapi-ur haplotyping 3 times

@@ -6,7 +6,7 @@
 #$ -cwd
 #$ -o job_reports/
 #$ -e job_reports/
-#$ -l mem_free=8G
+#$ -l h_vmem=8G
 
 # This script will take a binary plink file and:
 

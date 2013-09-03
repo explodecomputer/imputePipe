@@ -30,7 +30,6 @@ hapdatadir="${wd}data/haplotypes/chr${chr}/"
 impdatadir="${wd}data/imputed/chr${chr}/"
 refdatadir="/clusterdata/uqgheman/hpscratch/reference_data/1000_genomes/impute2/ALL_1000G_phase1integrated_v3_impute/"
 
-
 # Reference data file locations
 reflegend="${refdatadir}ALL_1000G_phase1integrated_v3_chr${chr}_impute.legend.gz"
 refhaps="${refdatadir}ALL_1000G_phase1integrated_v3_chr${chr}_impute.hap.gz"
@@ -40,11 +39,11 @@ refgmap="${refdatadir}genetic_map_chr${chr}_combined_b37.txt"
 interval=5000000
 
 # Target data information (after cleaning using strand_align.sh)
-rawdata="${wd}data/target/hrs_eur_qced2"
-originaldata="${wd}data/target/hrs_b37_flipped"
-chrdata="HRS${chr}"
-shortname="hrs${chr}"
-strand_file="${wd}data/target/strand/HumanOmni2.5M-b37-v2.strand"
+rawdata="${wd}data/target/popres_eur_qcstrict3"
+originaldata="${wd}data/target/popres_flipped"
+chrdata="POPRES${chr}"
+shortname="pop${chr}"
+strand_file="${wd}data/target/strand_files/affy36.strand"
 
 # LiftOver chain
 lochain="${wd}exe/hg18ToHg19.over.chain"
@@ -53,12 +52,12 @@ lochain="${wd}exe/hg18ToHg19.over.chain"
 nsnp=`wc -l ${originaldata}.bim | awk '{print $1}'`
 
 # Output name
-plink1kg="hrs_1kg_p1v3_${chr}"
+plink1kg="popres_1kg_p1v3_${chr}"
 
 # Filtering thresholds
-filterMAF="poly"
-filterInfo="0"
+filterMAF="0.01"
+filterInfo="0.8"
 
 # Filtering output name
-filtername="${plink1kg}_${filterMAF}_info${filterInfo}"
+filtername="${plink1kg}_maf${filterMAF}_info${filterInfo}"
 
