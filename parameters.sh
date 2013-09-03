@@ -28,7 +28,7 @@ filterinfoR="${wd}exe/filterinfo.R"
 targetdatadir="${wd}data/target/chr${chr}/"
 hapdatadir="${wd}data/haplotypes/chr${chr}/"
 impdatadir="${wd}data/imputed/chr${chr}/"
-refdatadir="/clusterdata/uqgheman/hpscratch/reference_data/1000_genomes/impute2/ALL_1000G_phase1integrated_v3_impute/"
+refdatadir="/psychoscratch/wrayvisscher/gib/imputation/reference/"
 
 # Reference data file locations
 reflegend="${refdatadir}ALL_1000G_phase1integrated_v3_chr${chr}_impute.legend.gz"
@@ -39,11 +39,11 @@ refgmap="${refdatadir}genetic_map_chr${chr}_combined_b37.txt"
 interval=5000000
 
 # Target data information (after cleaning using strand_align.sh)
-rawdata="${wd}data/target/popres_eur_qcstrict3"
-originaldata="${wd}data/target/popres_flipped"
-chrdata="POPRES${chr}"
-shortname="pop${chr}"
-strand_file="${wd}data/target/strand_files/affy36.strand"
+rawdata="${wd}data/target/bbc_qc"
+originaldata="${wd}data/target/bbc_flipped"
+chrdata="BBC${chr}"
+shortname="bbc${chr}"
+strand_file="${wd}data/target/strand/Human1-2M-DuoCustom_v1_A-b36.strand"
 
 # LiftOver chain
 lochain="${wd}exe/hg18ToHg19.over.chain"

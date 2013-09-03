@@ -74,6 +74,9 @@ ${plink} --noweb --bfile ${chrdata} --make-bed --out ${chrdata}
 cp ${chrdata}.bim ${chrdata}.bim.orig-snp-ids
 R --no-save --args ${chrdata}.bim ${reflegend} ${chrdata}.newpos < ${rs_updateR}
 
+# Remove duplicated SNPs
+R --no-save --args ${chrdata} ${plink} < ${removedupsnpsR}
+
 # find SNPs not present in reference, create new SNP order based on reference positions
 # R --no-save --args ${chrdata}.bim ${reflegend} ${chrdata}.newpos < ${positionsR}
 if [ -e ${chrdata}.newpos.missingsnps ]; then

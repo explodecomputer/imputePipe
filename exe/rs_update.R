@@ -67,7 +67,7 @@ a <- a[order(a$pd.x), ]
 stopifnot(all(a$SNP == dat$SNP))
 stopifnot(all(!is.na(a$SNP)))
 
-b <- subset(a, select=c(SNP, pd.y))
+b <- subset(a, !duplicated(SNP), select=c(SNP, pd.y))
 write.table(b, outname, row=F, col=F, qu=F)
 
 # now run plink --update-map
