@@ -39,9 +39,9 @@ temp2=$temp_prefix"2"
 temp3=$temp_prefix"3"
 
 #1. Apply the chr
-# ${plink} --noweb --allow-no-sex --bfile $stem --update-map $chr_file --update-chr --make-bed --out $temp1
+${plink} --noweb --allow-no-sex --bfile $stem --update-map $chr_file --update-chr --make-bed --out $temp1
 #2. Apply the pos
-# ${plink} --noweb --allow-no-sex --bfile $temp1 --update-map $pos_file --make-bed --out $temp2
+${plink} --noweb --allow-no-sex --bfile $temp1 --update-map $pos_file --make-bed --out $temp2
 #3. Apply the flip
 ${plink} --noweb --allow-no-sex --bfile $stem --flip $flip_file --make-bed --out $temp3
 #4. Extract the SNPs in the pos file, we don't want SNPs that aren't in the strand file
