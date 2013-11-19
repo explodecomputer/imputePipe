@@ -63,7 +63,7 @@ The pipeline was developed by Gibran Hemani under the [Complex Trait Genomics Gr
 
  1. First Clone this repository
     
-        git clone git@github.com:explodecomputer/imputePipe.git 
+        git clone https://github.com/explodecomputer/imputePipe.git
 
 
  2. Then `cp` your raw data in binary plink format to `data/target`
