@@ -1,12 +1,11 @@
 #!/bin/bash
 
-#$ -N imp
-#$ -t 1-22
-#$ -S /bin/bash
-#$ -cwd
-#$ -o job_reports/
-#$ -e job_reports/
-#$ -l h_vmem=10G
+#PBS -N imp
+#PBS -t 1-22
+#PBS -o job_reports/imp-output
+#PBS -e job_reports/imp-error
+#PBS -l walltime=12:00:00
+#PBS -l nodes=1:ppn=3
 
 # 1. vote on haplotypes
 # 2. spawn imputation script
@@ -18,10 +17,10 @@ set -e
 
 if [ -n "${1}" ]; then
   echo "${1}"
-  SGE_TASK_ID=${1}
+  PBS_ARRAYID=${1}
 fi
 
-chr=${SGE_TASK_ID}
+chr=${PBS_ARRAYID}
 wd=`pwd`"/"
 
 source parameters.sh
@@ -61,13 +60,12 @@ impout="${impdatadir}${chrdata}"
 sub_imp="${impdatadir}submit_impute${chr}.sh"
 
 echo "#!/bin/bash"                          >  ${sub_imp}
-echo "#$ -N ${shortname}"                   >> ${sub_imp}
-echo "#$ -cwd"                              >> ${sub_imp}
-echo "#$ -o ${impdatadir}job_reports/"      >> ${sub_imp}
-echo "#$ -e ${impdatadir}job_reports/"      >> ${sub_imp}
-echo "#$ -t 1-${nsplit}"                    >> ${sub_imp}
-echo "#$ -S /bin/bash"                      >> ${sub_imp}
-echo "#$ -l h_vmem=40G"                    >> ${sub_imp}
+echo "#PBS -N ${shortname}"                 >> ${sub_imp}
+echo "#PBS -o ${impdatadir}job_reports/imp" >> ${sub_imp}
+echo "#PBS -e ${impdatadir}job_reports/imp" >> ${sub_imp}
+echo "#PBS -t 1-${nsplit}"                  >> ${sub_imp}
+echo "#PBS -l walltime=12:00:00"            >> ${sub_imp}
+echo "#PBS -l nodes=1:ppn:16"               >> ${sub_imp}
 
 echo ""                                     >> ${sub_imp}
 
@@ -86,12 +84,12 @@ echo ""                                     >> ${sub_imp}
 
 echo "if [ -n \"\${1}\" ]; then"            >> ${sub_imp}
 echo "  echo \"region = \${1}\""            >> ${sub_imp}
-echo "  SGE_TASK_ID=\${1}"                  >> ${sub_imp}
+echo "  PBS_ARRAYID=\${1}"                  >> ${sub_imp}
 echo "fi"                                   >> ${sub_imp}
 
 echo ""                                     >> ${sub_imp}
 
-echo "region=\${SGE_TASK_ID}"               >> ${sub_imp}
+echo "region=\${PBS_ARRAYID}"               >> ${sub_imp}
 
 echo ""                                     >> ${sub_imp}
 
@@ -115,6 +113,7 @@ echo "    -known_haps_g ${hapout}.haps \\"  >> ${sub_imp}
 echo "    -h ${refhaps} \\"                 >> ${sub_imp}
 echo "    -l ${reflegend} \\"               >> ${sub_imp}
 echo "    -Ne 10000 \\"                     >> ${sub_imp}
+echo "    -k_hap 2000 \\"                   >> ${sub_imp}
 echo "    -int \${first} \${last} \\"       >> ${sub_imp}
 echo "    -o ${impout}_\${region} \\"       >> ${sub_imp}
 #echo "   -align_by_maf_g \\"               >> ${sub_imp}
