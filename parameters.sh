@@ -12,6 +12,7 @@ positionsR="${wd}exe/positions.R"
 modmarkersR="${wd}exe/modmarkers.R"
 rs_updateR="${wd}exe/rs_update.R"
 splitbimR="${wd}exe/splitbim.R"
+splitrefR="${wd}exe/splitref.R"
 genetdistR="${wd}exe/genetdist.R"
 makeheaderR="${wd}exe/makeheader.R"
 gprobs2beagle="${wd}exe/gprobs2beagle.jar"
@@ -20,6 +21,7 @@ stitchplinkR="${wd}exe/stitchplink.R"
 removedupsnpsR="${wd}exe/removedupsnps.R"
 cleanupR="${wd}exe/cleanup.R"
 filterinfoR="${wd}exe/filterinfo.R"
+imptemplate="${wd}exe/template_imputation.sh"
 
 ########################
 # TO BE EDITED BY USER #

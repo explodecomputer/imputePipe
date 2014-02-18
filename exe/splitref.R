@@ -58,17 +58,17 @@ makeSplitsSnps <- function(position, interval)
 }
 
 
-checkCoord <- function(coord, bim)
+checkCoord <- function(coord, legend)
 {
 	a <- array(0, nrow(coord))
 	for(i in 1:nrow(coord))
 	{
-		a[i] <- nrow(subset(bim, position >= coord[i,2] & position <= coord[i,3]))
+		a[i] <- nrow(subset(legend, position >= coord[i,2] & position <= coord[i,3]))
 		if(i != nrow(coord))
 		{
 			stopifnot(coord[i,3] < coord[i+1,2])
 		} else {
-			stopifnot(coord[i,3] == bim$position[nrow(legend)])
+			stopifnot(coord[i,3] == legend$position[nrow(legend)])
 		}
 	}
 	print(a)
@@ -80,7 +80,7 @@ checkCoord <- function(coord, bim)
 
 library(plyr)
 
-bimfile <- commandArgs(T)[1]
+legendfile <- commandArgs(T)[1]
 interval <- as.numeric(commandArgs(T)[2])
 type <- commandArgs[3]
 maxinterval <- commandArgs[4]
@@ -88,23 +88,22 @@ outfile <- commandArgs(T)[5]
 
 
 # # Examples
-# bimfile <- "ALL.chr22.integrated_phase1_v3.20101123.snps_indels_svs.genotypes.nosing.bim.gz"
+# legendfile <- "ALL.chr22.integrated_phase1_v3.20101123.snps_indels_svs.genotypes.nosing.legend.gz"
 
 # interval <- 500000
 # type <- "Distance"
 # maxinterval <- 100000
 
 
-# interval <- 300
+# interval <- 1000
 # type <- "Snps"
 # maxinterval <- 100000
 
 
 ##################################################
 
-bim <- read.table(bimfile, colClasses=c("character", "character", "numeric", "numeric", "character", "character"))[,c(2,4)]
-names(bim) <- c("id", "position")
-position <- findGaps(bim$position, maxinterval)
+legend <- read.table(legendfile, he=T, colClasses=c("character", "numeric", rep("character", 12)))[,1:2]
+position <- findGaps(legend$position, maxinterval)
 length(position)
 lapply(position, head)
 lapply(position, length)
@@ -118,7 +117,7 @@ for(i in 1:length(position))
 coord <- do.call("rbind", l)
 coord <- cbind(1:nrow(coord), coord)
 
-checkCoord(coord, bim)
+checkCoord(coord, legend)
 
 coord <- cbind(1:nsec, first[-(nsec+1)], last)
 write.table(format(coord, scientific=F, trim=T), file=outfile, row=F, col=F, qu=F)
