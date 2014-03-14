@@ -13,7 +13,10 @@
 # - run imputation
 # - convert output to binary plink format using gtool
 
+module add languages/R-3.0.2
 set -e
+
+cd ~/imputePipe
 
 if [ -n "${1}" ]; then
   echo "${1}"
@@ -37,7 +40,7 @@ fi
 # 1. Split chromosome into chunks
 # Use 5mb regions from reference
 
-R --no-save --args ${reflegend} ${interval} Distance $((interval/5)) ${impdatadir}split${chr}.txt < ${splitrefR}
+R --no-save --args ${reflegend} ${interval} Distance ${maxgap} ${impdatadir}split${chr}.txt < ${splitrefR}
 
 
 # 2. spawn imputation script
@@ -49,11 +52,10 @@ nsplit=`wc -l ${impdatadir}split${chr}.txt | awk '{print $1}'`
 echo "nsplit = ${nsplit}"
 
 sub_imp="${impdatadir}submit_impute${chr}.sh"
-cp ${imptemplate} ${sub_imp}.temp
+cp ${imptemplate} ${sub_imp}
 
-sed "s/NSPLIT/${nsplit}/g" ${sub_imp}.temp > ${sub_imp}.temp
-sed "s/SHORTNAME/${shortname}/g" ${sub_imp}.temp > ${sub_imp}.temp
-sed "s/CHR/${chr}/g" ${sub_imp}.temp > ${sub_imp}.temp
+sed -i "s/NSPLIT/${nsplit}/g" ${sub_imp}
+sed -i "s/SHORTNAME/${shortname}/g" ${sub_imp}
+sed -i "s/CHR/${chr}/g" ${sub_imp}
 
-mv ${sub_imp}.temp ${sub_imp}
 chmod 755 ${sub_imp}

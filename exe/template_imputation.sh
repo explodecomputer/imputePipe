@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -N SHORTNAME
-#PBS -o job_reports/imp
-#PBS -e job_reports/imp
+#PBS -o job_reports/imp-output
+#PBS -e job_reports/imp-error
 #PBS -t 1-NSPLIT
 #PBS -l walltime=12:00:00
 #PBS -l nodes=1:ppn:16
@@ -9,6 +9,12 @@
 set -e
 
 chr=CHR
+
+cd ~/imputePipe
+wd=`pwd`"/"
+
+source parameters.sh
+
 cd ${impdatadir}
 
 flag="backend"
@@ -21,36 +27,6 @@ fi
 
 region=${PBS_ARRAYID}
 hapout="${hapdatadir}${chrdata}"
-
-
-# Need to create directory in scratch space
-# Need to set output variables to point to scratch
-# Copy large input files to scratch
-
-if [ "${flag}" == "backend" ]; then
-
-	touch ${impout}_${region}.backend
-
-	JOBNO=`echo ${PBS_JOBID}_${PBS_ARRAYID} | sed s/.bluequeue1.cvos.cluster//`
-	WORKDIR="/local/${PBS_O_LOGNAME}.${JOBNO}"
-	mkdir ${WORKDIR}
-
-	cd ${WORKDIR}
-	
-	# Input files
-	cp ${impdatadir}split${chr}.txt .
-	cp ${refgmap} refgmap
-	refgmap="refgmap"
-	cp ${refhaps} refhaps
-	refhaps="refhaps"
-	cp ${reflegend} reflegend
-	reflegend="reflegend"
-	cp ${hapout}.haps target.haps
-	cp ${hapout}.sample target.sample
-	hapout="target"	
-
-	cp ${impout}_${region}* .
-fi
 
 
 # Get the region coordinates
@@ -70,7 +46,7 @@ if [[ ! -f "${chrdata}_${region}.gz" ]]; then
 
 	${impute2} \
 		-m ${refgmap} \
-		-known_haps_g ${chrdata}.haps \
+		-known_haps_g ${hapout}.haps \
 		-h ${refhaps} \
 		-l ${reflegend} \
 		-Ne 10000 \
@@ -110,16 +86,4 @@ if [[ ! -f "${impout}_${region}.bed" ]]; then
 
 	R --no-save --args ${chrdata}_${region} ${plink} < ${removedupsnpsR}
 
-fi
-
-
-# Copy completed files back
-
-if [ "${flag}" == "backend" ]; then
-	cp ${chrdata}_${region}.bed ${impdatadir}
-	cp ${chrdata}_${region}.bim ${impdatadir}
-	cp ${chrdata}_${region}.fam ${impdatadir}
-
-	cd ${MYDIR}
-	rm -fr $WORKDIR	
 fi

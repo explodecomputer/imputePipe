@@ -31,7 +31,7 @@ imptemplate="${wd}exe/template_imputation.sh"
 targetdatadir="${wd}data/target/chr${chr}/"
 hapdatadir="${wd}data/haplotypes/chr${chr}/"
 impdatadir="${wd}data/imputed/chr${chr}/"
-refdatadir="${wd}data/reference/ALL.integrated_phase1_v3.20101123.snps_indels_svs.genotypes.nosing/"
+refdatadir="/panfs/panasas01/sscm/gh13047/data/1000g_reference/no_singletons/ALL.integrated_phase1_v3.20101123.snps_indels_svs.genotypes.nosing/"
 chrmap="${wd}data/reference/genetic_map_b37/genetic_map_chr${chr}_combined_b37.txt.gz"
 
 # Reference data file locations
@@ -41,6 +41,7 @@ refgmap="${refdatadir}genetic_map_chr${chr}_combined_b37.txt"
 
 # impute2 interval (default is 5Mb)
 interval=5000000
+maxgap=1000000
 
 # Target data information (after cleaning using strand_align.sh)
 rawdata="${wd}data/target/ALSPAC_18K"

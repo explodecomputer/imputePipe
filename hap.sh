@@ -12,6 +12,9 @@
 
 set -e
 
+cd ~/imputePipe
+
+
 if [ -n "${1}" ]; then
   PBS_ARRAYID=${1}
 fi
@@ -24,9 +27,20 @@ wd=`pwd`"/"
 
 source parameters.sh
 
+if [ ! -d "${hapdatadir}" ]; then
+  mkdir ${hapdatadir}
+fi
+if [ ! -d "${impdatadir}" ]; then
+  mkdir ${impdatadir}
+fi
+
 cd ${targetdatadir}
 
+flags="--thread 16 --noped"
+if [ "${chr}" -eq "23" ]; then
+	flags="$flags --chrX"
+fi
 
-hapout="${hapdatadir}${chrdata}
-${shapeit2} --input-bed ${chrdata}.bed ${chrdata}.bim ${chrdata}.fam --input-map ${chrmap} --output-max ${hapout}.haps ${hapout}.sample --thread 16
+hapout="${hapdatadir}${chrdata}"
+${shapeit2} --input-bed ${chrdata}.bed ${chrdata}.bim ${chrdata}.fam --input-map ${chrmap} --output-max ${hapout}.haps ${hapout}.sample ${flags}
 

@@ -82,17 +82,20 @@ library(plyr)
 
 legendfile <- commandArgs(T)[1]
 interval <- as.numeric(commandArgs(T)[2])
-type <- commandArgs[3]
-maxinterval <- commandArgs[4]
+type <- commandArgs(T)[3]
+maxinterval <- as.numeric(commandArgs(T)[4])
 outfile <- commandArgs(T)[5]
 
+print(type)
+print(interval)
+print(maxinterval)
 
 # # Examples
-# legendfile <- "ALL.chr22.integrated_phase1_v3.20101123.snps_indels_svs.genotypes.nosing.legend.gz"
+# legendfile <- "~/data/1000g_reference/no_singletons/ALL.integrated_phase1_v3.20101123.snps_indels_svs.genotypes.nosing/ALL.chr22.integrated_phase1_v3.20101123.snps_indels_svs.genotypes.nosing.legend.gz"
 
-# interval <- 500000
+# interval <- 5000000
 # type <- "Distance"
-# maxinterval <- 100000
+# maxinterval <- 1000000
 
 
 # interval <- 1000
@@ -103,6 +106,7 @@ outfile <- commandArgs(T)[5]
 ##################################################
 
 legend <- read.table(legendfile, he=T, colClasses=c("character", "numeric", rep("character", 12)))[,1:2]
+print(head(legend))
 position <- findGaps(legend$position, maxinterval)
 length(position)
 lapply(position, head)
@@ -119,5 +123,7 @@ coord <- cbind(1:nrow(coord), coord)
 
 checkCoord(coord, legend)
 
-coord <- cbind(1:nsec, first[-(nsec+1)], last)
 write.table(format(coord, scientific=F, trim=T), file=outfile, row=F, col=F, qu=F)
+
+
+

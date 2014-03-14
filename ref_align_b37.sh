@@ -16,15 +16,15 @@
 module add languages/R-3.0.2
 set -e
 
-cd /projects/Imputation_extension_ALSPAC/Data-Bris/imputePipe
+cd ~/imputePipe
 
 
 if [[ -n "${1}" ]]; then
   echo ${1}
-  SGE_TASK_ID=${1}
+  PBS_ARRAYID=${1}
 fi
 
-chr=${SGE_TASK_ID}
+chr=${PBS_ARRAYID}
 wd=`pwd`"/"
 
 source parameters.sh
