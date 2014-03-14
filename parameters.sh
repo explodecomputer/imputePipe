@@ -3,6 +3,7 @@
 
 plink="${wd}exe/plink"
 hapi_ur="${wd}exe/hapi-ur"
+shapeit2="${wd}exe/shapeit2"
 impute2="${wd}exe/impute2"
 liftOver="${wd}exe/liftOver"
 vote_phase="${wd}exe/vote-phase"
@@ -30,21 +31,22 @@ imptemplate="${wd}exe/template_imputation.sh"
 targetdatadir="${wd}data/target/chr${chr}/"
 hapdatadir="${wd}data/haplotypes/chr${chr}/"
 impdatadir="${wd}data/imputed/chr${chr}/"
-refdatadir="/ibscratch/wrayvisscher/gib/reference_data/1000_genomes/impute2/ALL_1000G_phase1integrated_v3_impute/"
+refdatadir="${wd}data/reference/ALL.integrated_phase1_v3.20101123.snps_indels_svs.genotypes.nosing/"
+chrmap="${wd}data/reference/genetic_map_b37/genetic_map_chr${chr}_combined_b37.txt.gz"
 
 # Reference data file locations
-reflegend="${refdatadir}ALL_1000G_phase1integrated_v3_chr${chr}_impute.legend.gz"
-refhaps="${refdatadir}ALL_1000G_phase1integrated_v3_chr${chr}_impute.hap.gz"
+reflegend="${refdatadir}ALL.chr${chr}.integrated_phase1_v3.20101123.snps_indels_svs.genotypes.nosing.legend.gz"
+refhaps="${refdatadir}ALL.chr${chr}.integrated_phase1_v3.20101123.snps_indels_svs.genotypes.nosing.haplotypes.gz"
 refgmap="${refdatadir}genetic_map_chr${chr}_combined_b37.txt"
 
 # impute2 interval (default is 5Mb)
 interval=5000000
 
 # Target data information (after cleaning using strand_align.sh)
-rawdata="${wd}data/target/dataname"
-originaldata="${wd}data/target/dataname_flipped"
-chrdata="DAT${chr}"
-shortname="dat${chr}"
+rawdata="${wd}data/target/ALSPAC_18K"
+originaldata="${wd}data/target/ALSPAC_18K"
+chrdata="ALSPAC${chr}"
+shortname="alspac${chr}"
 strand_file="${wd}data/target/strand/chipname.strand"
 
 # LiftOver chain
