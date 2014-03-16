@@ -42,6 +42,10 @@ split${chr}.txt`
 
 # Do the imputation
 
+if [[ "${chr}" -eq "23" ]]; then
+	impute2="${impute2} -chrX -sample_known_haps_g ${hapout}.sample"
+fi
+
 if [[ ! -f "${chrdata}_${region}.gz" ]]; then
 
 	${impute2} \
