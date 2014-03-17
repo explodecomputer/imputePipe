@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #PBS -N imp
-#PBS -t 1-22
+#PBS -t 1-23
 #PBS -o job_reports/imp-output
 #PBS -e job_reports/imp-error
 #PBS -l walltime=12:00:00

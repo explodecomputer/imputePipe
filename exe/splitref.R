@@ -21,7 +21,8 @@ findGaps <- function(position, maxint)
 	}
 }
 
-makeSplitsDistance <- function(position, interval)
+
+makeSplitsDistance <- function(position, interval, maxblock=6500000)
 {
 	first <- position[1]
 	last <- position[length(position)]
@@ -31,13 +32,29 @@ makeSplitsDistance <- function(position, interval)
 		coord <- matrix(c(first, last), 1, 2)
 		return(coord)
 	}
+
+	# nint <- ceiling((last - first) / interval)
+	# interval <- round((last - first) / nint)
+
+
 	s1 <- seq(first, last, interval)
 	s1[length(s1)] <- last + 1
 	s2 <- s1[-1] - 1
 	nsec <- length(s1) - 1
-	coord <- cbind(s1[-(nsec+1)], s2)
+	s1 <- s1[-(nsec+1)]
+	d <- s2 - s1
+	if(d[length(d)] > maxblock)
+	{
+		print("too big")
+		s1 <- c(s1, s1[length(s1)])
+		s2 <- c(s2, s2[length(s2)])
+		s2[length(s1)-1] <- round(mean(c(s2[length(s2)-2], s2[length(s2)])))
+		s1[length(s1)] <- s2[length(s2)-1] + 1
+	}
+	coord <- cbind(s1, s2)
 	return(coord)
 }
+
 
 makeSplitsSnps <- function(position, interval)
 {
@@ -63,6 +80,7 @@ checkCoord <- function(coord, legend)
 	a <- array(0, nrow(coord))
 	for(i in 1:nrow(coord))
 	{
+		print(i)
 		a[i] <- nrow(subset(legend, position >= coord[i,2] & position <= coord[i,3]))
 		if(i != nrow(coord))
 		{
@@ -113,6 +131,7 @@ length(position)
 lapply(position, head)
 lapply(position, length)
 
+
 l <- list()
 for(i in 1:length(position))
 {
@@ -125,6 +144,3 @@ coord <- cbind(1:nrow(coord), coord)
 checkCoord(coord, legend)
 
 write.table(format(coord, scientific=F, trim=T), file=outfile, row=F, col=F, qu=F)
-
-
-
