@@ -5,7 +5,7 @@
 #PBS -o job_reports/imp-output
 #PBS -e job_reports/imp-error
 #PBS -l walltime=12:00:00
-#PBS -l nodes=1:ppn=3
+#PBS -l nodes=1:ppn=1
 
 # 1. vote on haplotypes
 # 2. spawn imputation script

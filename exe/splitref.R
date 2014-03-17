@@ -105,7 +105,8 @@ print(maxinterval)
 
 ##################################################
 
-legend <- read.table(legendfile, he=T)[,1:2]
+legend <- read.table(legendfile, he=T, colClasses="character")[,1:2]
+legend$position <- as.numeric(legend$position)
 print(head(legend))
 position <- findGaps(legend$position, maxinterval)
 length(position)
