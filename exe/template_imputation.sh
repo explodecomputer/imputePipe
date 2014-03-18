@@ -3,7 +3,7 @@
 #PBS -o job_reports/imp-output
 #PBS -e job_reports/imp-error
 #PBS -t 1-NSPLIT
-#PBS -l walltime=12:00:00
+#PBS -l walltime=48:00:00
 #PBS -l nodes=1:ppn=8
 
 set -e
@@ -57,7 +57,6 @@ if [[ ! -f "${chrdata}_${region}.gz" ]]; then
 		-k_hap 2000 \
 		-int ${first} ${last} \
 		-o ${chrdata}_${region} \
-		#   -align_by_maf_g \
 		-allow_large_regions \
 		-verbose \
 		-o_gz \
