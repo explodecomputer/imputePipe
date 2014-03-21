@@ -64,15 +64,6 @@ if [[ ! -f "${chrdata}_${region}.gz" ]]; then
 fi
 
 
-# Copy completed files back
-
-if [ "${flag}" == "backend" ]; then
-	cp ${chrdata}_${region}.gz ${impdatadir}
-	cp ${chrdata}_${region}_haps.gz ${impdatadir}
-	cp ${chrdata}_${region}_info.txt.gz ${impdatadir}
-fi
-
-
 # Convert impute2 format to binary plink format
 
 if [[ ! -f "${impout}_${region}.bed" ]]; then
