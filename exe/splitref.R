@@ -22,7 +22,7 @@ findGaps <- function(position, maxint)
 }
 
 
-makeSplitsDistance <- function(position, interval, maxblock=6500000)
+makeSplitsDistance <- function(position, interval, maxblock=6500000, evensplits=TRUE)
 {
 	first <- position[1]
 	last <- position[length(position)]
@@ -33,9 +33,11 @@ makeSplitsDistance <- function(position, interval, maxblock=6500000)
 		return(coord)
 	}
 
-	# nint <- ceiling((last - first) / interval)
-	# interval <- round((last - first) / nint)
-
+	if(evensplits)
+	{
+		nint <- ceiling((last - first) / interval)
+		interval <- floor((last - first) / nint)
+	}
 
 	s1 <- seq(first, last, interval)
 	s1[length(s1)] <- last + 1
@@ -75,13 +77,15 @@ makeSplitsSnps <- function(position, interval)
 }
 
 
-checkCoord <- function(coord, legend)
+checkCoord <- function(coord, legend, bim)
 {
-	a <- array(0, nrow(coord))
+	a <- b <- array(0, nrow(coord))
 	for(i in 1:nrow(coord))
 	{
 		print(i)
 		a[i] <- nrow(subset(legend, position >= coord[i,2] & position <= coord[i,3]))
+		b[i] <- nrow(subset(bim, V4 >= coord[i,2] & V4 <= coord[i,3]))
+		stopifnot(b[i] > 0)
 		if(i != nrow(coord))
 		{
 			stopifnot(coord[i,3] < coord[i+1,2])
@@ -89,8 +93,10 @@ checkCoord <- function(coord, legend)
 			stopifnot(coord[i,3] == legend$position[nrow(legend)])
 		}
 	}
-	print(a)
+	print(cbind(a,b))
+
 	stopifnot(sum(a) == nrow(legend))
+	stopifnot(sum(b) == nrow(bim))
 }
 
 
@@ -99,10 +105,11 @@ checkCoord <- function(coord, legend)
 library(plyr)
 
 legendfile <- commandArgs(T)[1]
-interval <- as.numeric(commandArgs(T)[2])
-type <- commandArgs(T)[3]
-maxinterval <- as.numeric(commandArgs(T)[4])
-outfile <- commandArgs(T)[5]
+bimfile <- commandArgs(T)[2]
+interval <- as.numeric(commandArgs(T)[3])
+type <- commandArgs(T)[4]
+maxinterval <- as.numeric(commandArgs(T)[5])
+outfile <- commandArgs(T)[6]
 
 print(type)
 print(interval)
@@ -110,10 +117,11 @@ print(maxinterval)
 
 # # Examples
 # legendfile <- "~/data/1000g_reference/no_singletons/ALL.integrated_phase1_v3.20101123.snps_indels_svs.genotypes.nosing/ALL.chr22.integrated_phase1_v3.20101123.snps_indels_svs.genotypes.nosing.legend.gz"
+# bimfile <- "~/imputePipe/data/target/chr2/ALSPAC2.bim"
 
 # interval <- 5000000
 # type <- "Distance"
-# maxinterval <- 1000000
+# maxinterval <- 2000000
 
 
 # interval <- 1000
@@ -124,6 +132,7 @@ print(maxinterval)
 ##################################################
 
 legend <- read.table(legendfile, he=T, colClasses="character")[,1:2]
+bim <- read.table(bimfile)
 legend$position <- as.numeric(legend$position)
 print(head(legend))
 position <- findGaps(legend$position, maxinterval)
@@ -136,11 +145,11 @@ l <- list()
 for(i in 1:length(position))
 {
 	func <- get(paste("makeSplits", type, sep=""))
-	l[[i]] <- func(position[[i]], interval)
+	l[[i]] <- func(position[[i]], interval, evensplits=TRUE)
 }
 coord <- do.call("rbind", l)
 coord <- cbind(1:nrow(coord), coord)
 
-checkCoord(coord, legend)
+checkCoord(coord, legend, bim)
 
 write.table(format(coord, scientific=F, trim=T), file=outfile, row=F, col=F, qu=F)

@@ -40,7 +40,7 @@ fi
 # 1. Split chromosome into chunks
 # Use 5mb regions from reference
 
-R --no-save --args ${reflegend} ${interval} Distance ${maxgap} ${impdatadir}split${chr}.txt < ${splitrefR}
+R --no-save --args ${reflegend} ${targetdatadir}${chrdata}.bim ${interval} Distance ${maxgap} ${impdatadir}split${chr}.txt < ${splitrefR}
 
 
 # 2. spawn imputation script

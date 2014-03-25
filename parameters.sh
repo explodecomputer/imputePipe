@@ -41,7 +41,7 @@ refgmap="${refdatadir}genetic_map_chr${chr}_combined_b37.txt"
 
 # impute2 interval (default is 5Mb)
 interval=5000000
-maxgap=1000000
+maxgap=2000000
 
 # Target data information (after cleaning using strand_align.sh)
 rawdata="${wd}data/target/ALSPAC_18K"
