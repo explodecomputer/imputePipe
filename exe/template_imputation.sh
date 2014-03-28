@@ -66,7 +66,7 @@ fi
 
 # Convert impute2 format to binary plink format
 
-if [[ ! -f "${impout}_${region}.bed" ]]; then
+if [[ ! -f "${chrdata}_${region}.bed" ]]; then
 
 	${imp2plink} \
 		${chrdata}_${region}.gz \
