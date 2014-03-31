@@ -80,23 +80,52 @@ makeSplitsSnps <- function(position, interval)
 checkCoord <- function(coord, legend, bim)
 {
 	a <- b <- array(0, nrow(coord))
-	for(i in 1:nrow(coord))
+	i <- 1
+	while(i <= nrow(coord))
 	{
 		print(i)
 		a[i] <- nrow(subset(legend, position >= coord[i,2] & position <= coord[i,3]))
 		b[i] <- nrow(subset(bim, V4 >= coord[i,2] & V4 <= coord[i,3]))
-		stopifnot(b[i] > 0)
-		if(i != nrow(coord))
+		if(b[i] == 0)
 		{
-			stopifnot(coord[i,3] < coord[i+1,2])
+			if(i == 1)
+			{
+				print("Merging 1 with 2")
+				coord[2,2] <- coord[1,2]
+				coord <- coord[-1,]
+			} else {
+				print(paste("Merging", i, "with", i-1))
+				coord[i-1,3] <- coord[i,3]
+				coord <- coord[-i, ]
+			}
+			i <- 1
+			coord[,1] <- 1:nrow(coord)
+			print("Restarting checks")
+		} else if(b[i] > 1500) {
+			print(paste("Splitting", i))
+			coord <- rbind(coord[1:i, ], coord[i:nrow(coord),])
+			sp <- floor(mean(c(coord[i,2], coord[i,3])))
+			coord[i,3] <- sp
+			coord[i+1,2] <- sp+1
+			i <- 1
+			coord[,1] <- 1:nrow(coord)
+			print("Restarting checks")
 		} else {
-			stopifnot(coord[i,3] == legend$position[nrow(legend)])
+			stopifnot(b[i] > 0)
+			if(i != nrow(coord))
+			{
+				stopifnot(coord[i,3] < coord[i+1,2])
+			} else {
+				stopifnot(coord[i,3] == legend$position[nrow(legend)])
+			}
+			i <- i+1
 		}
 	}
 	print(cbind(a,b))
 
 	stopifnot(sum(a) == nrow(legend))
 	stopifnot(sum(b) == nrow(bim))
+	return(coord)
 }
 
 
@@ -149,7 +178,9 @@ for(i in 1:length(position))
 }
 coord <- do.call("rbind", l)
 coord <- cbind(1:nrow(coord), coord)
+coord
 
-checkCoord(coord, legend, bim)
+coord <- checkCoord(coord, legend, bim)
+coord
 
 write.table(format(coord, scientific=F, trim=T), file=outfile, row=F, col=F, qu=F)
