@@ -8,17 +8,20 @@
 #PBS -l nodes=1:ppn=8
 
 
+module add languages/R-3.0.2
 set -e
 
+cd ~/imputePipe
+
 if [ -n "${1}" ]; then
-  SGE_TASK_ID=${1}
+  echo "${1}"
+  PBS_ARRAYID=${1}
 fi
 
-chr=${SGE_TASK_ID}
+chr=${PBS_ARRAYID}
 wd=`pwd`"/"
-source parameters.sh
 
-cd ${impdatadir}
+source parameters.sh
 
 nsplit=`wc -l ${impdatadir}split${chr}.txt | awk '{print $1}'`
 
