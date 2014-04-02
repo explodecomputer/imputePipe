@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#$ -N stitch
-#$ -t 1-22
-#$ -cwd
-#$ -S /bin/bash
-#$ -o job_reports/
-#$ -e job_reports/
-#$ -l h_vmem=50G
+#PBS -N stitch
+#PBS -t 1-23
+#PBS -o job_reports/stitch-output
+#PBS -e job_reports/stitch-error
+#PBS -l walltime=12:00:00
+#PBS -l nodes=1:ppn=8
+
 
 set -e
 

@@ -57,7 +57,7 @@ lochain="${wd}exe/hg18ToHg19.over.chain"
 nsnp=`wc -l ${originaldata}.bim | awk '{print $1}'`
 
 # Output name
-plink1kg="dataname_1kg_p1v3_${chr}"
+plink1kg="alspac_1kg_p1v3_${chr}"
 
 # Filtering thresholds
 filterMAF="0.01"
