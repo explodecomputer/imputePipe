@@ -7,7 +7,6 @@
 #PBS -l walltime=12:00:00
 #PBS -l nodes=1:ppn=8
 
-
 module add languages/R-3.0.2
 set -e
 
@@ -22,6 +21,9 @@ chr=${PBS_ARRAYID}
 wd=`pwd`"/"
 
 source parameters.sh
+
+
+cd ${impdatadir}
 
 nsplit=`wc -l ${impdatadir}split${chr}.txt | awk '{print $1}'`
 

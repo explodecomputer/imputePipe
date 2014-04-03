@@ -1,29 +1,6 @@
 #!/usr/bin/env bash
 
 
-plink="${wd}exe/plink"
-hapi_ur="${wd}exe/hapi-ur"
-shapeit2="${wd}exe/shapeit2"
-impute2="${wd}exe/impute2"
-liftOver="${wd}exe/liftOver"
-vote_phase="${wd}exe/vote-phase"
-bgl_to_ped="${wd}exe/bgl_to_ped"
-
-positionsR="${wd}exe/positions.R"
-modmarkersR="${wd}exe/modmarkers.R"
-rs_updateR="${wd}exe/rs_update.R"
-splitbimR="${wd}exe/splitbim.R"
-splitrefR="${wd}exe/splitref.R"
-genetdistR="${wd}exe/genetdist.R"
-makeheaderR="${wd}exe/makeheader.R"
-gprobs2beagle="${wd}exe/gprobs2beagle.jar"
-imp2plink="${wd}exe/imp2plink.sh"
-stitchplinkR="${wd}exe/stitchplink.R"
-removedupsnpsR="${wd}exe/removedupsnps.R"
-cleanupR="${wd}exe/cleanup.R"
-filterinfoR="${wd}exe/filterinfo.R"
-imptemplate="${wd}exe/template_imputation.sh"
-
 ########################
 # TO BE EDITED BY USER #
 ########################
@@ -66,3 +43,34 @@ filterInfo="0.8"
 # Filtering output name
 filtername="${plink1kg}_maf${filterMAF}_info${filterInfo}"
 
+# Backup
+backupdir="/projects/Imputation_extension_ALSPAC/Data-Bris/1kg_imp/"
+
+
+
+######################
+#   Do not change    #
+######################
+
+
+plink="${wd}exe/plink"
+hapi_ur="${wd}exe/hapi-ur"
+shapeit2="${wd}exe/shapeit2"
+impute2="${wd}exe/impute2"
+liftOver="${wd}exe/liftOver"
+vote_phase="${wd}exe/vote-phase"
+bgl_to_ped="${wd}exe/bgl_to_ped"
+positionsR="${wd}exe/positions.R"
+modmarkersR="${wd}exe/modmarkers.R"
+rs_updateR="${wd}exe/rs_update.R"
+splitbimR="${wd}exe/splitbim.R"
+splitrefR="${wd}exe/splitref.R"
+genetdistR="${wd}exe/genetdist.R"
+makeheaderR="${wd}exe/makeheader.R"
+gprobs2beagle="${wd}exe/gprobs2beagle.jar"
+imp2plink="${wd}exe/imp2plink.sh"
+stitchplinkR="${wd}exe/stitchplink.R"
+removedupsnpsR="${wd}exe/removedupsnps.R"
+cleanupR="${wd}exe/cleanup.R"
+filterinfoR="${wd}exe/filterinfo.R"
+imptemplate="${wd}exe/template_imputation.sh"

@@ -6,6 +6,12 @@ bim <- read.table(paste(rootname, ".bim", sep=""), colClasses=c("character", "ch
 
 names(bim) <- c("chr", "snp", "gd", "pd", "a1", "a2")
 
+
+index <- bim$snp == "."
+print(sum(index))
+bim$snp[index] <- with(bim, paste("chr", chr, ":", pd, sep=""))
+
+
 dups <- unique(bim$snp[duplicated(bim$snp)])
 ndup <- length(dups)
 

@@ -69,5 +69,8 @@ a <- paste(inputstem, "_", stitch, "_haps.gz", sep="")
 print(cmd <- paste("cat ", paste(a, collapse=" "), " > ", outputstem, "_haps.gz", sep=""))
 system(cmd)
 
+a <- paste(inputstem, "_", stitch, "_allele_probs.gz", sep="")
+print(cmd <- paste("cat ", paste(a, collapse=" "), " > ", outputstem, "_allele_probs.gz", sep=""))
+system(cmd)
 
 # if successful then delete the other bim/bed/fam files
