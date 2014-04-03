@@ -34,7 +34,7 @@ echo ""
 
 R --no-save --args split${chr}.txt stitch${chr}.txt ${targetdatadir}${chrdata}.bim ${plink} ${impdatadir}${chrdata} ${impdatadir}${plink1kg} < ${stitchplinkR}
 
-gzip ${impdatadir}${plink1kg}_info.txt
+gzip -f ${impdatadir}${plink1kg}_info.txt
 
 # rm ${impdatadir}${chrdata}_*.bed ${impdatadir}${chrdata}_*.bim ${impdatadir}${chrdata}_*.fam ${impdatadir}${chrdata}_*.log
 
