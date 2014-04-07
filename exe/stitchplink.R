@@ -1,6 +1,61 @@
 
 # --args split${chr}.txt stitch${chr}.txt ${targetdatadir}${chrdata}.bim ${plink} ${impdatadir}${chrdata} ${impdatadir}${plink1kg}
 
+
+checkOverwrite <- function(filename, i=1)
+{
+	if(!file.exists(filename))
+	{
+		return(filename)
+	} else {
+		return(checkOverwrite(paste(filename, i, sep=""), i+1))
+	}
+}
+
+recodeDotsBim <- function(bimfile)
+{
+	a <- read.table(bimfile, he=F, colClasses="character")
+	names(a) <- c("chr", "snp", "gd", "pd", "a1", "a2")
+	index <- a$snp == "."
+	if(sum(index) == 0) return()
+	cat(sum(index), "dots\n")
+	a$snp[index] <- paste("chr", a$chr[index], ":", a$pd[index], sep="")
+	newfile <- checkOverwrite(paste(bimfile, ".original", sep=""))
+	cmd <- paste("cp ", bimfile, " ", newfile, sep="")
+	system(cmd)
+	write.table(a, file=bimfile, row=F, col=F, qu=F)
+}
+
+recodeDotsInfo <- function(infofile)
+{
+	a <- read.table(infofile, he=T, colClasses="character")
+	index <- a$rs_id == "."
+	if(sum(index) == 0) return()
+	cat(sum(index), "dots\n")
+	chr <- unique(a$snp_id)
+	chr <- chr[chr != "---"]
+	a$rs_id[index] <- paste("chr", chr, ":", a$position[index], sep="")
+	newfile <- checkOverwrite(paste(infofile, ".original", sep=""))
+	cmd <- paste("cp ", infofile, " ", newfile, sep="")
+	system(cmd)
+	write.table(a, file=infofile, row=F, col=T, qu=F)
+}
+
+recodeChrBim <- function(bimfile)
+{
+	a <- read.table(bimfile, he=F, colClasses="character")
+	names(a) <- c("chr", "snp", "gd", "pd", "a1", "a2")
+	index <- grep("chr", a$snp)
+	if(length(index) == 0) return()
+	cat(length(index), "dots\n")
+	a$snp[index] <- paste("chr", a$chr[index], ":", a$pd[index], sep="")
+	newfile <- checkOverwrite(paste(bimfile, ".wrong", sep=""))
+	cmd <- paste("cp ", bimfile, " ", newfile, sep="")
+	system(cmd)
+	write.table(a, file=bimfile, row=F, col=F, qu=F)
+}
+
+
 args <- commandArgs(T)
 
 splittxt   <- args[1]
@@ -32,11 +87,15 @@ for(i in 1:nrow(split))
 		stopifnot(file.exists(paste(inputstem, "_", i, ".bed", sep="")))
 		stopifnot(file.exists(paste(inputstem, "_", i, ".bim", sep="")))
 		stopifnot(file.exists(paste(inputstem, "_", i, ".fam", sep="")))
+		# recodeDotsBim(paste(inputstem, "_", i, ".bim", sep=""))
+		# recodeChrBim(paste(inputstem, "_", i, ".bim", sep=""))
+		# recodeDotsInfo(paste(inputstem, "_", i, "_info", sep=""))
 		stitch[ii] <- i
 		ii <- ii+1
 	}
 }
 
+# recodeChrBim(paste(outputstem, ".bim", sep=""))
 print(stitch)
 
 # stitch together the info files
