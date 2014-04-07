@@ -26,7 +26,7 @@ source parameters.sh
 # Filter based on maf and info thresholds
 
 # gzip ${impdatadir}${plink1kg}_info.txt
-zcat ${impdatadir}${plink1kg}_info.txt.gz | awk -v minmaf=${filterMAF} -v mininfo=${filterInfo} '{ if(NR == 1 || ($4 >= minmaf && $4 <= (1-minmaf) && $5 >= mininfo)) {print $0}}' | gzip > ${impdatadir}${filtername}_info.txt.gz
+zcat ${impdatadir}${plink1kg}_info.txt.gz | awk -v minmaf=${filterMAF} -v mininfo=${filterInfo} '{ if(NR == 1 || ($4 >= minmaf && $4 <= (1-minmaf) && $5 >= mininfo)) {print $0}}' | gzip -f > ${impdatadir}${filtername}_info.txt.gz
 
 # Extract SNPs for plink to use
 zcat ${impdatadir}${filtername}_info.txt.gz | tail -n +2 | cut -d " " -f 2 | uniq > ${impdatadir}${filtername}.keepsnps
