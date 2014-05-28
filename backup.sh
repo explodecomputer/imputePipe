@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -N stitch
+#PBS -N backup
 #PBS -t 1-23
 #PBS -o job_reports/stitch-output
 #PBS -e job_reports/stitch-error
@@ -62,6 +62,7 @@ check_cp ${impname}.bed ${backupdir}/chr${chr}/${plink1kg}.bed
 check_cp ${impname}.bim ${backupdir}/chr${chr}/${plink1kg}.bim
 check_cp ${impname}.fam ${backupdir}/chr${chr}/${plink1kg}.fam
 check_cp ${impname}.gz ${backupdir}/chr${chr}/${plink1kg}.gz
+check_cp ${impname}_allele_probs.gz ${backupdir}/chr${chr}/${plink1kg}_allele_probs.gz
 check_cp ${impname}_haps.gz ${backupdir}/chr${chr}/${plink1kg}_haps.gz
 check_cp ${impname}_info.txt.gz ${backupdir}/chr${chr}/${plink1kg}_info.txt.gz
 

@@ -98,6 +98,7 @@ for(i in 1:nrow(split))
 # recodeChrBim(paste(outputstem, ".bim", sep=""))
 print(stitch)
 
+# q()
 # stitch together the info files
 # first file is cat, rest have to have header removed
 print(cmd <- paste("cat ", inputstem, "_", stitch[1], "_info > ", outputstem, "_info.txt", sep=""))
@@ -106,7 +107,6 @@ for(i in 2:length(stitch)) {
 	print(cmd <- paste("sed 1d ", inputstem, "_", stitch[i], "_info >> ", outputstem, "_info.txt", sep=""))
 	system(cmd)
 }
-
 
 # create list of files to be merged by plink
 filelist <- data.frame(paste(inputstem, "_", stitch, ".bed ", inputstem, "_", stitch, ".bim ", inputstem, "_", stitch, ".fam", sep=""))

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #PBS -N stitch
-#PBS -t 1-23
+#PBS -t 9
 #PBS -o job_reports/stitch-output
 #PBS -e job_reports/stitch-error
 #PBS -l walltime=12:00:00

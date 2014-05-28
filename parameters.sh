@@ -44,7 +44,8 @@ filterInfo="0.8"
 filtername="${plink1kg}_maf${filterMAF}_info${filterInfo}"
 
 # Backup
-backupdir="/projects/Imputation_extension_ALSPAC/Data-Bris/1kg_imp/"
+# backupdir="/projects/Imputation_extension_ALSPAC/Data-Bris/1kg_imp/"
+backupdir="/panfs/panasas01/shared/alspac/alspac_combined_1kg_20140424/"
 
 
 
@@ -53,7 +54,7 @@ backupdir="/projects/Imputation_extension_ALSPAC/Data-Bris/1kg_imp/"
 ######################
 
 
-plink="${wd}exe/plink"
+plink="plink1.90"
 hapi_ur="${wd}exe/hapi-ur"
 shapeit2="${wd}exe/shapeit2"
 impute2="${wd}exe/impute2"
